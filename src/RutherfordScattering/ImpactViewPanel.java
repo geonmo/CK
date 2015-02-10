@@ -22,6 +22,8 @@ public class ImpactViewPanel extends javax.swing.JPanel {
 
     AlphaParticle alpha;
     Nucleus nucle;
+    private int impactParameter=0;
+    private double initVelocity=0.0;
     
     
     /**
@@ -30,14 +32,28 @@ public class ImpactViewPanel extends javax.swing.JPanel {
     
     public ImpactViewPanel() {
         initComponents();
-        alpha = new AlphaParticle();
-        alpha.loadImage();      
-        nucle = new Nucleus();
-        nucle.loadImage();
+        resetPanel();
       
     }
-
-    
+    public void resetPanel(){
+        if ( initVelocity !=0.0 || impactParameter !=0 ) {
+            alpha = new AlphaParticle(impactParameter, initVelocity);
+        }
+        else {
+            alpha = new AlphaParticle();
+        }        
+        nucle = new Nucleus();   
+        System.out.printf("ip : %d, vel : %f",impactParameter, initVelocity);
+    }
+    public void setIP(int ip) {
+        impactParameter = ip;
+    }
+    public void setVelocity( double rel_velocity ) {
+        initVelocity = 3.0e8* rel_velocity;
+    }
+    public double getDistance() {
+        return alpha.pos.distance( nucle.pos);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,12 +80,11 @@ public class ImpactViewPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     
     
-    /**
-    public void resetPanel(){
-        // 이미지 정리
-        
+    
+    public void goStep(){
+        alpha.nextStep(nucle);
     }
-    */
+    
 
     @Override
     protected void paintComponent(Graphics grphcs) {

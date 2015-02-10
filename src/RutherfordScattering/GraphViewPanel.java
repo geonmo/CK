@@ -26,13 +26,25 @@ import org.jfree.data.xy.XYSeriesCollection;
  * @author Geonmo
  */
 public class GraphViewPanel extends ChartPanel {
-
+    private int bin_count = 0 ;
+    XYSeries s;
+    XYSeriesCollection data;
+    JFreeChart chart;
+    
     public GraphViewPanel(JFreeChart chart){                        
-            super(chart);        
+        super(chart);        
+        s = new XYSeries("Distance between alpha-nucleus");   
+        data = new XYSeriesCollection();
+        data.addSeries(s);
+        //this.chart = ChartFactory.createXYLineChart("Distance between","Time","Distance",data,PlotOrientation.VERTICAL,true,true,false);        
     }
-    public static JFreeChart getResultChart(){
-        JFreeChart chart = new JFreeChart(new XYPlot());
-        return chart;            
+    public void FillValue(double distance) {
+        bin_count = bin_count+1;
+        this.s.add(bin_count, distance);
+    }
+    public JFreeChart getResultChart(){        
+        this.chart = ChartFactory.createXYLineChart("Distance between","Time","Distance",data,PlotOrientation.VERTICAL,true,true,false);        
+        return this.chart;
     }
     public void paintComponent(Graphics g2)
     {

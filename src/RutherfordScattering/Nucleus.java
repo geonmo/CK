@@ -18,11 +18,11 @@ import javax.imageio.ImageIO;
  */
 public class Nucleus extends AlphaParticle {
         Nucleus(){                
-        this.pos = new Point(500,135);        
-        this.velocity = 0;
-        this.mass=1000;
-        this.charge = 1*(1.6e-19);  
-        this.size = 50;
+        this.pos = new Point(500,135);                
+        this.mass= 3.270707e-25;
+        this.charge = 79*(1.6e-19);  
+        this.size = 50;        
+        this.loadImage();
     }    
     public void loadImage() {
         String image_path = String.format("/RutherfordScattering/resource/nucl.png");        
