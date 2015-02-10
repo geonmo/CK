@@ -304,6 +304,8 @@
                     <Component class="javax.swing.JSlider" name="ImpactParameterSlider">
                       <Properties>
                         <Property name="maximum" type="int" value="20"/>
+                        <Property name="minimum" type="int" value="-20"/>
+                        <Property name="value" type="int" value="0"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JSlider" name="InitialVelocitySlider">

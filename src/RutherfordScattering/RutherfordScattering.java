@@ -167,6 +167,8 @@ public class RutherfordScattering extends javax.swing.JApplet {
         });
 
         ImpactParameterSlider.setMaximum(20);
+        ImpactParameterSlider.setMinimum(-20);
+        ImpactParameterSlider.setValue(0);
 
         ResetButton.setText("Reset");
         ResetButton.addActionListener(new java.awt.event.ActionListener() {
