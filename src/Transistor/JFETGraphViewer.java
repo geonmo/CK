@@ -96,7 +96,7 @@ public class JFETGraphViewer extends ChartPanel {
         this.chart = ChartFactory.createXYLineChart("Output characteristic V-I curves","V_ds","I_d",data,PlotOrientation.VERTICAL,true,true,false);        
         XYPlot plot = (XYPlot)chart.getPlot();
         plot.getRangeAxis().setRange(0,2100);
-        pointer = new XYPointerAnnotation("This point",info.getVds(), getDrainCurrent(info.getVds()), PI/4.0);
+        pointer = new XYPointerAnnotation("V_ds",info.getVds(), getDrainCurrent(info.getVds()), PI/4.0);
         plot.getAnnotations().clear();
         plot.addAnnotation(pointer);                
         
