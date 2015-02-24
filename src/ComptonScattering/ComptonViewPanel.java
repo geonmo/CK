@@ -16,6 +16,7 @@ import java.awt.Point;
 public class ComptonViewPanel extends javax.swing.JPanel {
 
     int step;
+    int angle;
     /**
      * Creates new form ComptonViewPanel
      */
@@ -63,28 +64,66 @@ public class ComptonViewPanel extends javax.swing.JPanel {
         
         g.fillOval(pos.x-10, pos.y-10,20,20);
     }
+    public void setAngle(int angle) {
+        this.angle = -angle;
+    }
     public void paintComponent(Graphics g)                
     {   
         super.paintComponent(g);
         step = step+1;        
         int amp = 25;
-        if ( step < this.getWidth()/2 ) { 
+        int height = this.getHeight();
+        int width = this.getWidth();
+        
+        if ( step < this.getWidth()/2-1 ) { 
             for( int i=0; i<step; i++ ){
             
                 double value = Math.sin(i*0.25)*amp;
                 double next_value = Math.sin((i+1)*0.25)*amp;
                 g.drawLine(i,(int)value+this.getHeight()/2, i+1, (int)next_value+this.getHeight()/2);
                 //System.out.printf("%d %f %d %f\n",i+first_pixel,value, i+1+first_pixel,next_value);
+                drawElectron(g, new Point(width/2, height/2));
             }
         }
         else {
+            for( int i=0  ; i< step-this.getWidth()/2 ; i++ ) {
+                double x = i;
+                double next_x = i+1;
+                double y =  Math.sin(i*0.25)*amp;
+                double next_y =  Math.sin( (i+1)*0.25)*amp;
+                
+                g.setColor(Color.BLACK);
+                double x_prime = x*Math.cos(Math.toRadians(angle))-y*Math.sin(Math.toRadians(angle)) + this.getWidth()/2;
+                double y_prime = x*Math.sin(Math.toRadians(angle))+y*Math.cos(Math.toRadians(angle)) + this.getHeight()/2;                
+                double next_x_prime = next_x*Math.cos(Math.toRadians(angle))-next_y*Math.sin(Math.toRadians(angle)) + this.getWidth()/2;
+                double next_y_prime = next_x*Math.sin(Math.toRadians(angle))+next_y*Math.cos(Math.toRadians(angle)) + this.getHeight()/2;
+                
+                g.drawLine((int)x_prime, (int) y_prime, (int)next_x_prime, (int)next_y_prime);
+                
+                
+                
+                g.setColor(Color.MAGENTA);
+                double e_x_prime = x*Math.cos(Math.toRadians(angle*(-0.8))) + this.getWidth()/2;
+                double e_y_prime = x*Math.sin(Math.toRadians(angle*(-0.8))) + this.getHeight()/2;
+                double next_e_x_prime = (x+1)*Math.cos(Math.toRadians(angle*(-0.8))) + this.getWidth()/2;
+                double next_e_y_prime = (x+1)*Math.sin(Math.toRadians(angle*(-0.8))) + this.getHeight()/2;
+                g.drawLine((int)e_x_prime, (int) e_y_prime, (int)next_e_x_prime, (int)next_e_y_prime);
+                g.setColor(Color.BLACK);
+                
+            }    
+            double x = step-width/2;
+            double e_x_prime = x*Math.cos(Math.toRadians(angle*(-0.8))) + this.getWidth()/2;
+            double e_y_prime = x*Math.sin(Math.toRadians(angle*(-0.8))) + this.getHeight()/2;
+                
+            drawElectron(g, new Point((int)e_x_prime, (int)e_y_prime));
+                
+                
             
         }
         
       
-        int height = this.getHeight();
-        int width = this.getWidth();
-        drawElectron(g, new Point(width/2, height/2));
+
+        
             
         g.setColor(Color.black);
         

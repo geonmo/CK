@@ -251,7 +251,8 @@ public class ComptonScatteringApplet extends javax.swing.JApplet {
 
     private void scatterAngleSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_scatterAngleSpinnerStateChanged
         // TODO add your handling code here:
-        angle= (int)scatterAngleSpinner.getValue();        
+        angle= (int)scatterAngleSpinner.getValue();   
+        ((ComptonViewPanel)ComptonViewer).setAngle((int)angle);
     }//GEN-LAST:event_scatterAngleSpinnerStateChanged
 
     private void TestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestButtonActionPerformed
