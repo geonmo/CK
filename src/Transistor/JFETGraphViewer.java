@@ -26,6 +26,7 @@ public class JFETGraphViewer extends ChartPanel {
     JFreeChart chart;
     XYSeries s;
     XYSeriesCollection data;
+    XYPointerAnnotation pointer;
     /**
      * Creates new form JFETGraphViewer
      * @param chart
@@ -35,9 +36,18 @@ public class JFETGraphViewer extends ChartPanel {
         s = new XYSeries("JFET_Current(I_D)");   
         data = new XYSeriesCollection();
         data.addSeries(s);
+        info =  TransistorInfo.getInstacne();
+        this.makeNewSeries();
+        
+        
         
         initComponents();        
-        info =  TransistorInfo.getInstacne();
+        
+        //this.chart = ChartFactory.createXYLineChart("Output characteristic V-I curves","V_ds","I_d",data,PlotOrientation.VERTICAL,true,true,false);        
+        //pointer = new XYPointerAnnotation("This point",info.getVds(), getDrainCurrent(info.getVds()), PI/4.0);
+        //XYPlot plot = (XYPlot)chart.getPlot();
+        //plot.addAnnotation(pointer);                
+        
     }
     public void makeNewSeries(){
         s.clear();
@@ -50,11 +60,10 @@ public class JFETGraphViewer extends ChartPanel {
         //int Vds = info.getVds();
         int Vgs = info.getVgs();
         int Vpoff = info.getPinchOff();
-        double value = 0;
-        
         
         double I_d = 0.0;
         double I_dss = 2000; 
+        
         // Channel-Off(or pinch-off) region.  I_drain must be 0,
         if ( Vgs< Vpoff ) {
             I_d = 0.0;
@@ -83,17 +92,26 @@ public class JFETGraphViewer extends ChartPanel {
     }
     public JFreeChart getResultChart(){  
         this.makeNewSeries();
+        
         this.chart = ChartFactory.createXYLineChart("Output characteristic V-I curves","V_ds","I_d",data,PlotOrientation.VERTICAL,true,true,false);        
         XYPlot plot = (XYPlot)chart.getPlot();
         plot.getRangeAxis().setRange(0,2100);
-        XYPointerAnnotation pointer = new XYPointerAnnotation("This point",info.getVds(), getDrainCurrent(info.getVds()), PI/4.0);
+        pointer = new XYPointerAnnotation("This point",info.getVds(), getDrainCurrent(info.getVds()), PI/4.0);
+        plot.getAnnotations().clear();
         plot.addAnnotation(pointer);                
+        
+        
         return this.chart;
     }
     public void paintComponent(Graphics g)
     {
         super.paintComponent(g);
-        this.setChart(getResultChart());
+        System.out.println("Calling!!");
+        if ( info.isChanged() ) {
+            this.chart = this.getResultChart();
+            this.setChart(this.chart);
+            info.appliedChanged();
+        }
     
     }
     /**

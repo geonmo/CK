@@ -70,6 +70,10 @@ public class Transistor extends javax.swing.JApplet {
         TransistorSelector = new javax.swing.JTabbedPane();
         JFETPanel = new javax.swing.JPanel();
         JFETViewPanel = new JFET2DViewer();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         JFETGraphPanel = new JFETGraphViewer(chart);
         JFETControlPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -95,15 +99,43 @@ public class Transistor extends javax.swing.JApplet {
         JFETViewPanel.setMinimumSize(new java.awt.Dimension(565, 250));
         JFETViewPanel.setPreferredSize(new java.awt.Dimension(565, 250));
 
+        jLabel7.setText("Source");
+
+        jLabel8.setText("Drain");
+
+        jLabel9.setText("Gate");
+
+        jLabel10.setText("Gate");
+
         javax.swing.GroupLayout JFETViewPanelLayout = new javax.swing.GroupLayout(JFETViewPanel);
         JFETViewPanel.setLayout(JFETViewPanelLayout);
         JFETViewPanelLayout.setHorizontalGroup(
             JFETViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 561, Short.MAX_VALUE)
+            .addGroup(JFETViewPanelLayout.createSequentialGroup()
+                .addGap(78, 78, 78)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addGap(102, 102, 102))
+            .addGroup(JFETViewPanelLayout.createSequentialGroup()
+                .addGap(263, 263, 263)
+                .addGroup(JFETViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel9))
+                .addContainerGap(272, Short.MAX_VALUE))
         );
         JFETViewPanelLayout.setVerticalGroup(
             JFETViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 289, Short.MAX_VALUE)
+            .addGroup(JFETViewPanelLayout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addGroup(JFETViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addGap(68, 68, 68)
+                .addComponent(jLabel10)
+                .addGap(60, 60, 60))
         );
 
         JFETGraphPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -295,6 +327,11 @@ public class Transistor extends javax.swing.JApplet {
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
     
+    public void repaintPanels(){
+        ((JFET2DViewer)JFETViewPanel).repaint();
+        ((JFETGraphViewer)JFETGraphPanel).repaint();
+    }
+    
     private void TestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestButtonActionPerformed
         // TODO add your handling code here:        
         System.out.println(info.getVds());
@@ -306,24 +343,27 @@ public class Transistor extends javax.swing.JApplet {
     private void JFET_VdsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_JFET_VdsSpinnerStateChanged
         // TODO add your handling code here:
         info.setVds((int)JFET_VdsSpinner.getValue());
+        this.repaintPanels();
         
     }//GEN-LAST:event_JFET_VdsSpinnerStateChanged
 
     private void JFET_VgsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_JFET_VgsSpinnerStateChanged
         // TODO add your handling code here:
         info.setVgs((int)JFET_VgsSpinner.getValue());
+        this.repaintPanels();
         
     }//GEN-LAST:event_JFET_VgsSpinnerStateChanged
 
     private void PinchOffVoltageStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_PinchOffVoltageStateChanged
         // TODO add your handling code here:
         info.setPinchOff((int)PinchOffVoltage.getValue());
+        this.repaintPanels();
         
     }//GEN-LAST:event_PinchOffVoltageStateChanged
 
     private void SetupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetupButtonActionPerformed
         // TODO add your handling code here:
-        ((JFET2DViewer)JFETViewPanel).repaint();
+        this.repaintPanels();
     }//GEN-LAST:event_SetupButtonActionPerformed
 
 
@@ -341,11 +381,15 @@ public class Transistor extends javax.swing.JApplet {
     private javax.swing.JButton TestButton;
     private javax.swing.JTabbedPane TransistorSelector;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

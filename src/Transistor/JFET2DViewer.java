@@ -37,7 +37,8 @@ public class JFET2DViewer extends javax.swing.JPanel {
     }
     public void paintComponent(Graphics g)
     {
-        super.paintComponent(g);        
+        super.paintComponent(g);     
+        
         if ( height ==0 && width == 0) {
             height = this.getHeight();
             width = this.getWidth();
