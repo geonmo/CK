@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Transistor;
-
+import org.jfree.chart.JFreeChart;
 /**
  *
  * @author Geonmo
@@ -15,6 +15,7 @@ public class Transistor extends javax.swing.JApplet {
      * Initializes the applet Transistor
      */
     TransistorInfo info = TransistorInfo.getInstacne();
+    JFreeChart chart;
     @Override
     public void init() {
         /* Set the Nimbus look and feel */
@@ -50,6 +51,10 @@ public class Transistor extends javax.swing.JApplet {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        info.setPinchOff((int)PinchOffVoltage.getValue());
+        info.setVds((int)JFET_VdsSpinner.getValue());
+        info.setVgs((int)JFET_VgsSpinner.getValue());
+        TestButton.setVisible(false);
     }
 
     /**
@@ -65,7 +70,7 @@ public class Transistor extends javax.swing.JApplet {
         TransistorSelector = new javax.swing.JTabbedPane();
         JFETPanel = new javax.swing.JPanel();
         JFETViewPanel = new JFET2DViewer();
-        JFETGraphPanel = new javax.swing.JPanel();
+        JFETGraphPanel = new JFETGraphViewer(chart);
         JFETControlPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         JFET_VgsSlider = new javax.swing.JSlider();
@@ -79,48 +84,55 @@ public class Transistor extends javax.swing.JApplet {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         TestButton = new javax.swing.JButton();
+        SetupButton = new javax.swing.JButton();
 
         setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
         setPreferredSize(new java.awt.Dimension(800, 600));
 
         JFETViewPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        JFETViewPanel.setMaximumSize(new java.awt.Dimension(565, 250));
+        JFETViewPanel.setMinimumSize(new java.awt.Dimension(565, 250));
+        JFETViewPanel.setPreferredSize(new java.awt.Dimension(565, 250));
 
         javax.swing.GroupLayout JFETViewPanelLayout = new javax.swing.GroupLayout(JFETViewPanel);
         JFETViewPanel.setLayout(JFETViewPanelLayout);
         JFETViewPanelLayout.setHorizontalGroup(
             JFETViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 561, Short.MAX_VALUE)
         );
         JFETViewPanelLayout.setVerticalGroup(
             JFETViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 305, Short.MAX_VALUE)
+            .addGap(0, 289, Short.MAX_VALUE)
         );
 
         JFETGraphPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        JFETGraphPanel.setMaximumSize(new java.awt.Dimension(565, 254));
+        JFETGraphPanel.setMinimumSize(new java.awt.Dimension(565, 254));
+        JFETGraphPanel.setPreferredSize(new java.awt.Dimension(565, 254));
 
         javax.swing.GroupLayout JFETGraphPanelLayout = new javax.swing.GroupLayout(JFETGraphPanel);
         JFETGraphPanel.setLayout(JFETGraphPanelLayout);
         JFETGraphPanelLayout.setHorizontalGroup(
             JFETGraphPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 572, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         JFETGraphPanelLayout.setVerticalGroup(
             JFETGraphPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 250, Short.MAX_VALUE)
         );
 
         JFETControlPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel1.setText("V_GS");
 
-        JFET_VgsSlider.setMaximum(30);
-        JFET_VgsSlider.setValue(10);
+        JFET_VgsSlider.setMaximum(0);
+        JFET_VgsSlider.setMinimum(-50);
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, JFET_VgsSpinner, org.jdesktop.beansbinding.ELProperty.create("${value}"), JFET_VgsSlider, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
 
-        JFET_VgsSpinner.setModel(new javax.swing.SpinnerNumberModel(10, 0, 30, 1));
+        JFET_VgsSpinner.setModel(new javax.swing.SpinnerNumberModel(0, -10, 0, 1));
         JFET_VgsSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 JFET_VgsSpinnerStateChanged(evt);
@@ -129,18 +141,23 @@ public class Transistor extends javax.swing.JApplet {
 
         jLabel2.setText("Pinch-off Voltage");
 
-        PinchOffVoltage.setModel(new javax.swing.SpinnerNumberModel(25, 0, 30, 1));
+        PinchOffVoltage.setModel(new javax.swing.SpinnerNumberModel(-15, -50, 0, 1));
+        PinchOffVoltage.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                PinchOffVoltageStateChanged(evt);
+            }
+        });
 
         jLabel3.setText("V_DS");
 
-        JFET_VdsSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 30, 1));
+        JFET_VdsSpinner.setModel(new javax.swing.SpinnerNumberModel(0, 0, 50, 1));
         JFET_VdsSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 JFET_VdsSpinnerStateChanged(evt);
             }
         });
 
-        JFET_VdsSlider.setMaximum(40);
+        JFET_VdsSlider.setMaximum(50);
 
         binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, JFET_VdsSpinner, org.jdesktop.beansbinding.ELProperty.create("${value}"), JFET_VdsSlider, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
@@ -155,6 +172,13 @@ public class Transistor extends javax.swing.JApplet {
         TestButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 TestButtonActionPerformed(evt);
+            }
+        });
+
+        SetupButton.setText("Setup");
+        SetupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SetupButtonActionPerformed(evt);
             }
         });
 
@@ -186,9 +210,15 @@ public class Transistor extends javax.swing.JApplet {
                                 .addComponent(JFET_VdsSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(TestButton))
+                            .addGroup(JFETControlPanelLayout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(TestButton)))
                         .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(11, 11, 11))
+            .addGroup(JFETControlPanelLayout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addComponent(SetupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         JFETControlPanelLayout.setVerticalGroup(
             JFETControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -215,9 +245,11 @@ public class Transistor extends javax.swing.JApplet {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(JFET_VdsSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62)
+                .addGap(28, 28, 28)
                 .addComponent(TestButton)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(SetupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout JFETPanelLayout = new javax.swing.GroupLayout(JFETPanel);
@@ -225,22 +257,24 @@ public class Transistor extends javax.swing.JApplet {
         JFETPanelLayout.setHorizontalGroup(
             JFETPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JFETPanelLayout.createSequentialGroup()
-                .addGroup(JFETPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(JFETGraphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(JFETViewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(JFETPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(JFETViewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(JFETGraphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JFETControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 216, Short.MAX_VALUE)
+                .addComponent(JFETControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         JFETPanelLayout.setVerticalGroup(
             JFETPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JFETPanelLayout.createSequentialGroup()
-                .addComponent(JFETViewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(JFETGraphPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(JFETPanelLayout.createSequentialGroup()
-                .addComponent(JFETControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(JFETPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(JFETPanelLayout.createSequentialGroup()
+                        .addComponent(JFETViewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(JFETGraphPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(JFETControlPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0))
         );
 
         JFETControlPanel.getAccessibleContext().setAccessibleName("JFETConPanel");
@@ -260,22 +294,37 @@ public class Transistor extends javax.swing.JApplet {
 
         bindingGroup.bind();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void TestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestButtonActionPerformed
         // TODO add your handling code here:        
         System.out.println(info.getVds());
-        ((JFET2DViewer)JFETViewPanel).displayVds();
+        ((JFET2DViewer)JFETViewPanel).printInformation();
+        
+        
     }//GEN-LAST:event_TestButtonActionPerformed
 
     private void JFET_VdsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_JFET_VdsSpinnerStateChanged
         // TODO add your handling code here:
         info.setVds((int)JFET_VdsSpinner.getValue());
+        
     }//GEN-LAST:event_JFET_VdsSpinnerStateChanged
 
     private void JFET_VgsSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_JFET_VgsSpinnerStateChanged
         // TODO add your handling code here:
         info.setVgs((int)JFET_VgsSpinner.getValue());
+        
     }//GEN-LAST:event_JFET_VgsSpinnerStateChanged
+
+    private void PinchOffVoltageStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_PinchOffVoltageStateChanged
+        // TODO add your handling code here:
+        info.setPinchOff((int)PinchOffVoltage.getValue());
+        
+    }//GEN-LAST:event_PinchOffVoltageStateChanged
+
+    private void SetupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SetupButtonActionPerformed
+        // TODO add your handling code here:
+        ((JFET2DViewer)JFETViewPanel).repaint();
+    }//GEN-LAST:event_SetupButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -288,6 +337,7 @@ public class Transistor extends javax.swing.JApplet {
     private javax.swing.JSlider JFET_VgsSlider;
     private javax.swing.JSpinner JFET_VgsSpinner;
     private javax.swing.JSpinner PinchOffVoltage;
+    private javax.swing.JButton SetupButton;
     private javax.swing.JButton TestButton;
     private javax.swing.JTabbedPane TransistorSelector;
     private javax.swing.JLabel jLabel1;

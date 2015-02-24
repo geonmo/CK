@@ -5,24 +5,59 @@
  */
 package Transistor;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /**
  *
  * @author Geonmo
  */
 public class JFET2DViewer extends javax.swing.JPanel {
     
-    TransistorInfo info = TransistorInfo.getInstacne();
+    TransistorInfo info;
+    int height;
+    int width;
     /**
      * Creates new form JFET2DViewer
      */
     public JFET2DViewer() {
-        initComponents();
-        
+        initComponents();        
+        height = 0;
+        width = 0;
+        info =  TransistorInfo.getInstacne();
     }
 
-    public void displayVds(){
-        
+    public void printInformation(){        
         System.out.printf("This messaage come from 2Dviwer. Vds is %d\n", info.getVds() );
+        System.out.printf("This messaage come from 2Dviwer. Vgs is %d\n", info.getVgs() );
+        System.out.printf("This messaage come from 2Dviwer. V_p is %d\n", info.getPinchOff() );
+        System.out.printf("This messaage come from 2Dviwer. V_th is %d\n", info.getThreshold());
+        System.out.printf("This messaage come from 2Dviwer. width %d\n", width);
+        System.out.printf("This messaage come from 2Dviwer. height %d\n", height);
+    }
+    public void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);        
+        if ( height ==0 && width == 0) {
+            height = this.getHeight();
+            width = this.getWidth();
+        }
+        g.setColor(Color.red);
+        g.fillRect( (int)(width*0.2), (int)(height*0.2),(int)(width*0.6) ,(int)(height*0.6) );
+        
+        g.setColor(Color.yellow);
+        int scale = (int)((height*0.6/2)*((double)info.getVgs()/(double)info.getPinchOff()));
+        if ( scale <  27 ) { scale = 27; }
+        //System.out.println("scale : ");
+        //System.out.println(scale);
+        g.fillRect( (int)(width*0.5)-scale,(int)(height*0.2), scale*2, scale );        
+        g.fillRect( (int)(width*0.5)-scale,(int)(height*0.8-scale), scale*2, scale   );
+        
+        
+        g.setColor(Color.green);
+        g.fillRect( (int)(width*0.5)-25,(int)(height*0.2), 25*2, 25 );        
+        g.fillRect( (int)(width*0.5)-25,(int)(height*0.8-25), 25*2, 25   );        
+        
     }
     
     /**
