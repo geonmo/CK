@@ -74,6 +74,9 @@ public class RutherfordScattering extends javax.swing.JApplet {
 
         jSeparator1 = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
+        ResetButton1 = new javax.swing.JButton();
+        StartButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jInternalFrame1 = new javax.swing.JInternalFrame();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
@@ -92,8 +95,35 @@ public class RutherfordScattering extends javax.swing.JApplet {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         RuOptionPanel = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        InitVelocitySpinner1 = new javax.swing.JSpinner();
+        InitialVelocitySlider1 = new javax.swing.JSlider();
+        ResetButton2 = new javax.swing.JButton();
+        StartButton2 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
+
+        ResetButton1.setText("Reset");
+        ResetButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetButton1ActionPerformed(evt);
+            }
+        });
+
+        StartButton1.setText("Start");
+        StartButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StartButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Quit");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jInternalFrame1.setMaximumSize(new java.awt.Dimension(800, 600));
         jInternalFrame1.setMinimumSize(new java.awt.Dimension(800, 600));
@@ -279,7 +309,7 @@ public class RutherfordScattering extends javax.swing.JApplet {
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 611, Short.MAX_VALUE)
+            .addGap(0, 579, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,15 +318,77 @@ public class RutherfordScattering extends javax.swing.JApplet {
 
         RuOptionPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        jLabel3.setText("Initial Velocity(c)");
+
+        InitVelocitySpinner1.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, 1.0d, 0.01d));
+        InitVelocitySpinner1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                InitVelocitySpinner1StateChanged(evt);
+            }
+        });
+
+        ResetButton2.setText("Reset");
+        ResetButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ResetButton2ActionPerformed(evt);
+            }
+        });
+
+        StartButton2.setText("Start");
+        StartButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StartButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Quit");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout RuOptionPanelLayout = new javax.swing.GroupLayout(RuOptionPanel);
         RuOptionPanel.setLayout(RuOptionPanelLayout);
         RuOptionPanelLayout.setHorizontalGroup(
             RuOptionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 149, Short.MAX_VALUE)
+            .addGroup(RuOptionPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(ResetButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(RuOptionPanelLayout.createSequentialGroup()
+                .addGroup(RuOptionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RuOptionPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel3))
+                    .addGroup(RuOptionPanelLayout.createSequentialGroup()
+                        .addGap(38, 38, 38)
+                        .addComponent(InitVelocitySpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(RuOptionPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(InitialVelocitySlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(RuOptionPanelLayout.createSequentialGroup()
+                        .addComponent(StartButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         RuOptionPanelLayout.setVerticalGroup(
             RuOptionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 537, Short.MAX_VALUE)
+            .addGroup(RuOptionPanelLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(InitVelocitySpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(InitialVelocitySlider1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(204, 204, 204)
+                .addComponent(ResetButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(RuOptionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(StartButton2)
+                    .addComponent(jButton5))
+                .addContainerGap(166, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -305,8 +397,8 @@ public class RutherfordScattering extends javax.swing.JApplet {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(RuOptionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addComponent(RuOptionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -406,6 +498,34 @@ public class RutherfordScattering extends javax.swing.JApplet {
         ((ImpactViewPanel)ImpactViewPanel).resetPanel();  
     }//GEN-LAST:event_InitVelocitySpinnerStateChanged
 
+    private void InitVelocitySpinner1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_InitVelocitySpinner1StateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_InitVelocitySpinner1StateChanged
+
+    private void ResetButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ResetButton1ActionPerformed
+
+    private void StartButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_StartButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void ResetButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ResetButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ResetButton2ActionPerformed
+
+    private void StartButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_StartButton2ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel GraphViewPanel;
@@ -413,16 +533,25 @@ public class RutherfordScattering extends javax.swing.JApplet {
     private javax.swing.JSpinner ImpactParameterSpinner;
     private javax.swing.JPanel ImpactViewPanel;
     private javax.swing.JSpinner InitVelocitySpinner;
+    private javax.swing.JSpinner InitVelocitySpinner1;
     private javax.swing.JSlider InitialVelocitySlider;
+    private javax.swing.JSlider InitialVelocitySlider1;
     private javax.swing.JPanel OptionPanel;
     private javax.swing.JButton ResetButton;
+    private javax.swing.JButton ResetButton1;
+    private javax.swing.JButton ResetButton2;
     private javax.swing.JPanel RuOptionPanel;
     private javax.swing.JButton StartButton;
+    private javax.swing.JButton StartButton1;
+    private javax.swing.JButton StartButton2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JInternalFrame jInternalFrame1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
