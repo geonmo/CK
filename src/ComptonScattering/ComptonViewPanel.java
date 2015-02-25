@@ -16,6 +16,7 @@ import java.awt.Point;
 public class ComptonViewPanel extends javax.swing.JPanel {
 
     int step, angle, wavelength;
+    double angleP,wavelengthP;
     
     /**
      * Creates new form ComptonViewPanel
@@ -24,6 +25,7 @@ public class ComptonViewPanel extends javax.swing.JPanel {
         initComponents();
         step = 0;
         angle=0;
+        angleP =0;
         wavelength= 0;
     }
 
@@ -83,8 +85,14 @@ public class ComptonViewPanel extends javax.swing.JPanel {
     public void setAngle(int angle) {
         this.angle = -angle;
     }
+    public void setAngleP(double angle) {
+        this.angleP = angle;
+    }
     public void setWavelength(int wavelength) {
         this.wavelength = wavelength;
+    }
+    public void setWavelengthP(double wavelength) {
+        this.wavelengthP = wavelength;
     }
     public void paintComponent(Graphics g)                
     {   
@@ -112,7 +120,7 @@ public class ComptonViewPanel extends javax.swing.JPanel {
                 double y =  Math.sin(i*0.25)*amp;
                 double next_y =  Math.sin( (i+1)*0.25)*amp;
                 
-                g.setColor(changeColor((int)(this.wavelength*1.4)));
+                g.setColor(changeColor((int)(this.wavelength)));
                 double x_prime = x*Math.cos(Math.toRadians(angle))-y*Math.sin(Math.toRadians(angle)) + this.getWidth()/2;
                 double y_prime = x*Math.sin(Math.toRadians(angle))+y*Math.cos(Math.toRadians(angle)) + this.getHeight()/2;                
                 double next_x_prime = next_x*Math.cos(Math.toRadians(angle))-next_y*Math.sin(Math.toRadians(angle)) + this.getWidth()/2;
@@ -123,24 +131,30 @@ public class ComptonViewPanel extends javax.swing.JPanel {
                 
                 
                 g.setColor(Color.MAGENTA);
-                double e_x_prime = x*Math.cos(Math.toRadians(angle*(-0.8))) + this.getWidth()/2;
-                double e_y_prime = x*Math.sin(Math.toRadians(angle*(-0.8))) + this.getHeight()/2;
-                double next_e_x_prime = (x+1)*Math.cos(Math.toRadians(angle*(-0.8))) + this.getWidth()/2;
-                double next_e_y_prime = (x+1)*Math.sin(Math.toRadians(angle*(-0.8))) + this.getHeight()/2;
+                
+                //double angleP = Math.asin( )
+                
+                double e_x_prime = x*Math.cos(Math.toRadians(angleP)) + this.getWidth()/2;
+                double e_y_prime = x*Math.sin(Math.toRadians(angleP)) + this.getHeight()/2;
+                double next_e_x_prime = (x+1)*Math.cos(Math.toRadians(angleP)) + this.getWidth()/2;
+                double next_e_y_prime = (x+1)*Math.sin(Math.toRadians(angleP)) + this.getHeight()/2;
                 g.drawLine((int)e_x_prime, (int) e_y_prime, (int)next_e_x_prime, (int)next_e_y_prime);
                 g.setColor(Color.BLACK);
                 
             }    
             double x = step-width/2;
-            double e_x_prime = x*Math.cos(Math.toRadians(angle*(-0.8))) + this.getWidth()/2;
-            double e_y_prime = x*Math.sin(Math.toRadians(angle*(-0.8))) + this.getHeight()/2;
+            double e_x_prime = x*Math.cos(Math.toRadians(angleP)) + this.getWidth()/2;
+            double e_y_prime = x*Math.sin(Math.toRadians(angleP)) + this.getHeight()/2;
             g.setColor(Color.BLACK); 
             drawElectron(g, new Point((int)e_x_prime, (int)e_y_prime));
                 
                 
             
         }
-        
+        String temp_string = "Scattered wavelength : ";
+        temp_string+= String.valueOf(this.wavelengthP);
+        temp_string+= "nm";
+        g.drawString(temp_string, this.getWidth()/2-100, 200);
       
 
         

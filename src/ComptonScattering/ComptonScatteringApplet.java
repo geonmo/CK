@@ -17,10 +17,10 @@ public class ComptonScatteringApplet extends javax.swing.JApplet {
     
     double h = 6.62606957E-34;
     double me = 9.10938291E-31;
-    double c =  299792458;
+    double c =  2.99792458E8;
     double lambda;
     double lambdaP;
-    double angle;
+    double angle,angleP;
     int step;
     javax.swing.Timer timer ;
     boolean isTimerOn;  
@@ -64,6 +64,7 @@ public class ComptonScatteringApplet extends javax.swing.JApplet {
             ex.printStackTrace();
         }
         step = 0;
+        //TestButton.setVisible(false);
     }
     
     /**
@@ -247,13 +248,19 @@ public class ComptonScatteringApplet extends javax.swing.JApplet {
     private void wavelengthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_wavelengthSpinnerStateChanged
         // TODO add your handling code here:
         lambda= (int)wavelengthSpinner.getValue();   
+        double lambdaP = this.getLambdaPrime();
         ((ComptonViewPanel)ComptonViewer).setWavelength((int)lambda);
+        ((ComptonViewPanel)ComptonViewer).setWavelengthP(lambdaP);
     }//GEN-LAST:event_wavelengthSpinnerStateChanged
 
     private void scatterAngleSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_scatterAngleSpinnerStateChanged
         // TODO add your handling code here:
         angle= (int)scatterAngleSpinner.getValue();   
         ((ComptonViewPanel)ComptonViewer).setAngle((int)angle);
+        angleP = Math.asin( h/lambda * Math.sin(Math.toRadians(angle)*Math.sqrt(1-0.01)/(0.1*me*c)));
+        ((ComptonViewPanel)ComptonViewer).setAngleP(angle);
+        double lambdaP = this.getLambdaPrime();
+        ((ComptonViewPanel)ComptonViewer).setWavelengthP(lambdaP);
     }//GEN-LAST:event_scatterAngleSpinnerStateChanged
 
     private void TestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestButtonActionPerformed
@@ -282,7 +289,8 @@ public class ComptonScatteringApplet extends javax.swing.JApplet {
 
     public double getLambdaPrime(){
         //return (h/(me*c)*(1-Math.cos(0.25))+this.lambda*1e-11)*1e11;
-        return (h/(me*c)*(1-Math.cos(Math.toRadians(angle)))+this.lambda*1e-11)*1e11;
+        double lambdaP = (h/(me*c)*(1-Math.cos(Math.toRadians(angle)))+this.lambda*1e-9)*1e9;
+        return lambdaP ;
     }    
      public class aListener implements ActionListener 
     {       
