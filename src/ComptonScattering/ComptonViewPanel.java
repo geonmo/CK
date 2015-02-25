@@ -15,14 +15,16 @@ import java.awt.Point;
  */
 public class ComptonViewPanel extends javax.swing.JPanel {
 
-    int step;
-    int angle;
+    int step, angle, wavelength;
+    
     /**
      * Creates new form ComptonViewPanel
      */
     public ComptonViewPanel() {
         initComponents();
         step = 0;
+        angle=0;
+        wavelength= 0;
     }
 
     /**
@@ -58,6 +60,20 @@ public class ComptonViewPanel extends javax.swing.JPanel {
         }
     }
     */
+    public Color changeColor(int wavelength){
+            Color co = Color.BLACK;
+            double rel = (1-(wavelength-300.)/(800.0-300.0))*0.8;
+            if ( wavelength>0) {
+                co = Color.getHSBColor( (float)rel, 1f, 1f);            
+            }
+            else {                                
+                co = Color.getHSBColor( (float)rel, 0.5f, 0.5f);            
+            }
+            return co;
+        }
+    
+    
+    
     public void drawElectron(Graphics g, Point pos){
         //int height = this.getHeight();
         //int width = this.getWidth();
@@ -66,6 +82,9 @@ public class ComptonViewPanel extends javax.swing.JPanel {
     }
     public void setAngle(int angle) {
         this.angle = -angle;
+    }
+    public void setWavelength(int wavelength) {
+        this.wavelength = wavelength;
     }
     public void paintComponent(Graphics g)                
     {   
@@ -77,11 +96,12 @@ public class ComptonViewPanel extends javax.swing.JPanel {
         
         if ( step < this.getWidth()/2-1 ) { 
             for( int i=0; i<step; i++ ){
-            
+                g.setColor(changeColor(this.wavelength));
                 double value = Math.sin(i*0.25)*amp;
                 double next_value = Math.sin((i+1)*0.25)*amp;
                 g.drawLine(i,(int)value+this.getHeight()/2, i+1, (int)next_value+this.getHeight()/2);
                 //System.out.printf("%d %f %d %f\n",i+first_pixel,value, i+1+first_pixel,next_value);
+                g.setColor(Color.BLACK);
                 drawElectron(g, new Point(width/2, height/2));
             }
         }
@@ -92,7 +112,7 @@ public class ComptonViewPanel extends javax.swing.JPanel {
                 double y =  Math.sin(i*0.25)*amp;
                 double next_y =  Math.sin( (i+1)*0.25)*amp;
                 
-                g.setColor(Color.BLACK);
+                g.setColor(changeColor((int)(this.wavelength*1.4)));
                 double x_prime = x*Math.cos(Math.toRadians(angle))-y*Math.sin(Math.toRadians(angle)) + this.getWidth()/2;
                 double y_prime = x*Math.sin(Math.toRadians(angle))+y*Math.cos(Math.toRadians(angle)) + this.getHeight()/2;                
                 double next_x_prime = next_x*Math.cos(Math.toRadians(angle))-next_y*Math.sin(Math.toRadians(angle)) + this.getWidth()/2;
@@ -114,7 +134,7 @@ public class ComptonViewPanel extends javax.swing.JPanel {
             double x = step-width/2;
             double e_x_prime = x*Math.cos(Math.toRadians(angle*(-0.8))) + this.getWidth()/2;
             double e_y_prime = x*Math.sin(Math.toRadians(angle*(-0.8))) + this.getHeight()/2;
-                
+            g.setColor(Color.BLACK); 
             drawElectron(g, new Point((int)e_x_prime, (int)e_y_prime));
                 
                 

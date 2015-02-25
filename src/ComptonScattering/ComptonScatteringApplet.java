@@ -112,7 +112,7 @@ public class ComptonScatteringApplet extends javax.swing.JApplet {
 
         jLabel1.setText("Incient Wavelength (nm)");
 
-        wavelengthSpinner.setModel(new javax.swing.SpinnerNumberModel(650, 1, 800, 1));
+        wavelengthSpinner.setModel(new javax.swing.SpinnerNumberModel(650, 300, 800, 1));
 
         org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, wavelengthSlider, org.jdesktop.beansbinding.ELProperty.create("${value}"), wavelengthSpinner, org.jdesktop.beansbinding.BeanProperty.create("value"));
         bindingGroup.addBinding(binding);
@@ -124,7 +124,7 @@ public class ComptonScatteringApplet extends javax.swing.JApplet {
         });
 
         wavelengthSlider.setMaximum(800);
-        wavelengthSlider.setMinimum(1);
+        wavelengthSlider.setMinimum(300);
 
         jLabel2.setText("Scatter Angle (degree)");
 
@@ -246,7 +246,8 @@ public class ComptonScatteringApplet extends javax.swing.JApplet {
 
     private void wavelengthSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_wavelengthSpinnerStateChanged
         // TODO add your handling code here:
-        lambda= (int)wavelengthSpinner.getValue();        
+        lambda= (int)wavelengthSpinner.getValue();   
+        ((ComptonViewPanel)ComptonViewer).setWavelength((int)lambda);
     }//GEN-LAST:event_wavelengthSpinnerStateChanged
 
     private void scatterAngleSpinnerStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_scatterAngleSpinnerStateChanged
